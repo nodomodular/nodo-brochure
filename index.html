@@ -302,15 +302,13 @@ section{padding:64px 64px;border-top:0.5px solid var(--rule)}
 </button>
 <div id="nav-overlay" onclick="closeNav()"></div>
 <nav id="nav-menu">
-  <p class="nav-section-label">Secciones</p>
-  <button class="nav-item" onclick="scrollTo('sec-quienes');closeNav()">01 — Quiénes somos</button>
-  <button class="nav-item" onclick="scrollTo('sec-pilares');closeNav()">02 — Nuestros pilares</button>
-  <button class="nav-item" onclick="scrollTo('sec-personaliza');closeNav()">03 — Personaliza tu quincho</button>
-  <button class="nav-item" onclick="scrollTo('sec-base');closeNav()">04 — La base de todo</button>
-  
-  <button class="nav-item" onclick="scrollTo('sec-esencial');closeNav()">05 — Modelos</button>
-  <button class="nav-item" onclick="scrollTo('sec-garantia');closeNav()">06 — Garantía y postventa</button>
-  <button class="nav-item" onclick="scrollTo('sec-cta');closeNav()">07 — Cotizar ahora</button>
+  <button class="nav-item" onclick="scrollToSection('sec-quienes');closeNav()">01 — Quiénes somos</button>
+  <button class="nav-item" onclick="scrollToSection('sec-pilares');closeNav()">02 — Nuestros pilares</button>
+  <button class="nav-item" onclick="scrollToSection('sec-personaliza');closeNav()">03 — Personaliza tu quincho</button>
+  <button class="nav-item" onclick="scrollToSection('sec-base');closeNav()">04 — La base de todo</button>
+  <button class="nav-item" onclick="scrollToSection('sec-esencial');closeNav()">05 — Modelos</button>
+  <button class="nav-item" onclick="scrollToSection('sec-garantia');closeNav()">06 — Garantía y postventa</button>
+  <button class="nav-item" onclick="scrollToSection('sec-cta');closeNav()">07 — Cotizar ahora</button>
   <a class="nav-cta" href="https://nodo-setup.vercel.app/" target="_blank" onclick="closeNav()">Customiza tu quincho →</a>
 </nav>
 
@@ -325,7 +323,7 @@ function closeNav(){
   document.getElementById('nav-menu').classList.remove('open');
   document.getElementById('nav-overlay').classList.remove('open');
 }
-function scrollTo(id){
+function scrollToSection(id){
   var el = document.getElementById(id);
   if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
 }
