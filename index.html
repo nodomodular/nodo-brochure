@@ -12,7 +12,7 @@
   --mid:#6B5E56;--light:#A8998F;--copper:#A0682A;--copper-light:#F5EDE0;--copper-mid:#C8904E;
 }
 body{font-family:'DM Sans',sans-serif;background:#E8E4DF;color:var(--carbon);-webkit-text-size-adjust:100%}
-.page{max-width:860px;margin:0 auto;background:var(--white)}
+.page{max-width:860px;margin:0 auto;background:var(--white);overflow:hidden}
 
 /* ── COVER ── */
 .cover{background:var(--white);display:flex;flex-direction:column;justify-content:space-between;padding:56px 64px;border-bottom:1px solid var(--rule);min-height:560px;gap:40px}
@@ -284,6 +284,15 @@ section{padding:64px 64px;border-top:0.5px solid var(--rule)}
   text-decoration:none;display:block;text-align:center;
   -webkit-tap-highlight-color:transparent;
 }
+
+@media (min-width: 860px) {
+  body { background: #E8E4DF; }
+  .page {
+    margin: 40px auto;
+    box-shadow: 0 2px 40px rgba(0,0,0,0.08);
+  }
+  #nav-toggle { right: calc(50% - 430px - 54px); }
+}
 </style>
 </head>
 <body>
@@ -422,7 +431,7 @@ function scrollTo(id){
 </section>
 
 <!-- CONFIGURACIÓN -->
-<section id="sec-personaliza" style="padding:64px 0 0;border-top:0.5px solid var(--rule)">
+<section id="sec-personaliza" style="padding:64px 0 0;border-top:0.5px solid var(--rule);overflow:hidden">
   <div style="padding:0 64px 36px">
     <p class="sec-label">03 — Personaliza tu quincho</p>
     <h2 class="config-section-hl">En estos 6 puntos, <em>tú eliges.</em></h2>
