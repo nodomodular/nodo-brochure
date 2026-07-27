@@ -828,5 +828,19 @@ function scrollToSection(id){
 </div>
 
 </div>
+
+<script>
+document.addEventListener('click', function(e) {
+  var el = e.target.closest('a[data-event]');
+  if (!el) return;
+  var eventName = el.getAttribute('data-event');
+  if (eventName) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'event': eventName
+    });
+  }
+});
+</script>
 </body>
 </html>
