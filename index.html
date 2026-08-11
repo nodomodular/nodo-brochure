@@ -487,17 +487,17 @@ function scrollToSection(id){
     <div class="qhs" style="top:62.6%;left:24.7%"><button class="qhs-btn" data-panel="cubierta"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 8.5 12 15 2 8.5"/><polyline points="2 15 12 21.5 22 15"/><polyline points="2 11.5 12 18 22 11.5"/></svg></button></div>
     <div class="qhs" style="top:36.5%;left:52.1%"><button class="qhs-btn" data-panel="melamina"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 8.5 12 15 2 8.5"/><polyline points="2 15 12 21.5 22 15"/><polyline points="2 11.5 12 18 22 11.5"/></svg></button></div>
 
-    <div class="qhs-panel" id="qp-piso"><button class="qhs-close">&#x2715;</button><p class="qhs-title">Piso</p><div class="qchips"><span class="qchip">Pino</span><span class="qchip">Deck WPC</span><span class="qchip">Porcelanato antideslizante</span></div></div>
+    <div class="qhs-panel" id="qp-piso"><button class="qhs-close">&#x2715;</button><p class="qhs-title">Piso</p><div class="qchips"><span class="qchip">Deck WPC</span><span class="qchip">Pino</span><span class="qchip">Porcelanato antideslizante</span></div></div>
 
     <div class="qhs-panel" id="qp-cielo"><button class="qhs-close">&#x2715;</button><p class="qhs-title">Cielo interior</p><div class="qchips"><span class="qchip">Pino Machimbrado</span><span class="qchip">Ranurado PVC</span><span class="qchip">Volcanita</span></div></div>
 
-    <div class="qhs-panel" id="qp-mint"><button class="qhs-close">&#x2715;</button><p class="qhs-title">Muro interior</p><div class="qchips"><span class="qchip">Ranurado PVC</span><span class="qchip">Pino Horizontal</span><span class="qchip">Metálico</span><span class="qchip">WPC Ranurado</span><span class="qchip">WPC Tabla</span><span class="qchip">Volcanita</span></div></div>
+    <div class="qhs-panel" id="qp-mint"><button class="qhs-close">&#x2715;</button><p class="qhs-title">Muro interior</p><div class="qchips"><span class="qchip">Metálico</span><span class="qchip">Pino Horizontal</span><span class="qchip">Ranurado PVC</span><span class="qchip">Volcanita</span><span class="qchip">WPC Ranurado</span><span class="qchip">WPC Tabla</span></div></div>
 
-    <div class="qhs-panel" id="qp-mext"><button class="qhs-close">&#x2715;</button><p class="qhs-title">Muro exterior</p><div class="qchips"><span class="qchip">WPC Ranurado Coextruido</span><span class="qchip">WPC Tabla Extruido</span><span class="qchip">WPC Ranurado</span><span class="qchip">WPC Tabla</span><span class="qchip">Metálico</span><span class="qchip">Pino Vertical</span></div></div>
+    <div class="qhs-panel" id="qp-mext"><button class="qhs-close">&#x2715;</button><p class="qhs-title">Muro exterior</p><div class="qchips"><span class="qchip">Metálico</span><span class="qchip">Pino Vertical</span><span class="qchip">WPC Tabla Extruido</span><span class="qchip">WPC Ranurado</span><span class="qchip">WPC Ranurado Coextruido</span><span class="qchip">WPC Tabla</span></div></div>
 
-    <div class="qhs-panel" id="qp-cubierta"><button class="qhs-close">&#x2715;</button><p class="qhs-title">Cubierta muebles</p><div class="qchips"><span class="qchip">Cuarzo</span><span class="qchip">Porcelanato</span></div></div>
+    <div class="qhs-panel" id="qp-cubierta"><button class="qhs-close">&#x2715;</button><p class="qhs-title">Cubierta muebles</p><div class="qchips"><span class="qchip">Cuarzo</span></div></div>
 
-    <div class="qhs-panel" id="qp-melamina"><button class="qhs-close">&#x2715;</button><p class="qhs-title">Melamina</p><div class="qchips"><span class="qchip">Grafito</span><span class="qchip">Negro</span><span class="qchip">Expresso</span><span class="qchip">Roble Cava</span><span class="qchip">Jerez</span><span class="qchip">Avella</span></div></div>
+    <div class="qhs-panel" id="qp-melamina"><button class="qhs-close">&#x2715;</button><p class="qhs-title">Melamina</p><div class="qchips"><span class="qchip">Grafito</span><span class="qchip">Negro</span><span class="qchip">Expresso</span><span class="qchip">Roble Cava</span><span class="qchip">Roble Rústico</span><span class="qchip">Cocoa</span></div></div>
 
   </div>
 
@@ -803,7 +803,12 @@ document.addEventListener('click', function(e) {
     panel.classList.add('open');
     var eRect = explorer.getBoundingClientRect();
     var bRect = btnEl.getBoundingClientRect();
-    var top = bRect.top - eRect.top + 40;
+    var panelH = panel.offsetHeight || 150;
+    var spaceBelow = eRect.height - (bRect.top - eRect.top + 40);
+    var top = spaceBelow > panelH
+      ? bRect.top - eRect.top + 40
+      : bRect.top - eRect.top - panelH - 8;
+    if (top < 4) top = 4;
     var left = bRect.left - eRect.left - 90;
     if (left < 4) left = 4;
     if (left + 224 > eRect.width) left = eRect.width - 228;
