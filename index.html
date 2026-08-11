@@ -395,7 +395,59 @@ section{padding:64px 64px;border-top:0.5px solid var(--rule)}
   
   .qchips{display:flex;flex-wrap:wrap;gap:3px}
   .qchip{font-size:11px;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.8);border:0.5px solid rgba(255,255,255,0.15)}
-  
+
+  /* ── STICKY CTA ── */
+  #sticky-cta{
+    position:fixed;
+    top:50%;
+    right:20px;
+    transform:translateY(-50%);
+    z-index:850;
+    display:flex;
+    align-items:center;
+    gap:0;
+    background:var(--copper);
+    border-radius:30px;
+    box-shadow:0 4px 20px rgba(26,25,23,0.25);
+    text-decoration:none;
+    cursor:grab;
+    touch-action:none;
+    user-select:none;
+    -webkit-tap-highlight-color:transparent;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.35s ease, box-shadow 0.15s ease;
+  }
+  #sticky-cta.visible{opacity:1;pointer-events:auto}
+  #sticky-cta:active{cursor:grabbing;box-shadow:0 6px 24px rgba(26,25,23,0.35)}
+  #sticky-cta.dragging{transition:none}
+  #sticky-cta .sc-grip{
+    display:flex;flex-direction:column;gap:3px;
+    padding:0 6px 0 10px;
+    opacity:0.5;
+  }
+  #sticky-cta .sc-grip span{width:3px;height:3px;border-radius:50%;background:white}
+  #sticky-cta .sc-icon{
+    width:34px;height:34px;border-radius:50%;
+    background:rgba(255,255,255,0.15);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;margin:4px;
+  }
+  #sticky-cta .sc-text{
+    font-size:12px;font-weight:500;color:white;
+    padding:0 18px 0 10px;
+    white-space:nowrap;
+    letter-spacing:0.01em;
+  }
+  @media (min-width:860px){
+    #sticky-cta{ right: calc(50% - 440px + 20px); }
+  }
+  @media (max-width:480px){
+    #sticky-cta .sc-text{display:none}
+    #sticky-cta .sc-icon{margin:5px}
+    #sticky-cta .sc-grip{padding:0 4px 0 8px}
+  }
+
   </style>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -415,6 +467,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span></span><span></span><span></span>
 </button>
 <div id="nav-overlay" onclick="closeNav()"></div>
+
+<!-- CTA STICKY -->
+<a id="sticky-cta" href="https://configura.nodomodular.cl" target="_blank" data-event="cta_click_sticky" aria-label="Customiza tu quincho">
+  <span class="sc-grip"><span></span><span></span><span></span></span>
+  <span class="sc-icon">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2.2" fill="white" stroke="none"/>
+      <line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2.2" fill="white" stroke="none"/>
+      <line x1="4" y1="18" x2="20" y2="18"/><circle cx="11" cy="18" r="2.2" fill="white" stroke="none"/>
+    </svg>
+  </span>
+  <span class="sc-text">Customiza tu quincho</span>
+</a>
 <nav id="nav-menu">
     <button class="nav-item" onclick="scrollToSection('sec-personaliza');closeNav()">02 — Personaliza tu quincho</button>
   <button class="nav-item" onclick="scrollToSection('sec-esencial');closeNav()">03 — Modelos</button>
@@ -441,6 +506,120 @@ function scrollToSection(id){
   var el = document.getElementById(id);
   if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
 }
+</script>
+
+<script>
+(function(){
+  var btn = document.getElementById('sticky-cta');
+  if (!btn) return;
+  var STORAGE_KEY = 'nodo_sticky_cta_pos';
+  var dragging = false, moved = false;
+  var startX, startY, startLeft, startTop;
+  var DRAG_THRESHOLD = 6;
+  var hasCustomPosition = false;
+
+  function clamp(val, min, max){ return Math.max(min, Math.min(max, val)); }
+
+  function applyStoredPosition(){
+    var raw;
+    try { raw = localStorage.getItem(STORAGE_KEY); } catch(e) { return; }
+    if (!raw) return;
+    var pos;
+    try { pos = JSON.parse(raw); } catch(e) { return; }
+    if (typeof pos.x !== 'number' || typeof pos.y !== 'number') return;
+    hasCustomPosition = true;
+    var rect = btn.getBoundingClientRect();
+    var maxX = window.innerWidth - rect.width - 6;
+    var maxY = window.innerHeight - rect.height - 6;
+    var x = clamp(pos.x, 6, Math.max(6, maxX));
+    var y = clamp(pos.y, 6, Math.max(6, maxY));
+    btn.style.top = y + 'px';
+    btn.style.left = x + 'px';
+    btn.style.right = 'auto';
+    btn.style.transform = 'none';
+    btn.classList.add('visible');
+  }
+
+  function savePosition(x, y){
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify({x:x, y:y})); } catch(e) {}
+  }
+
+  // Reveal only once the user scrolls past the cover — keeps the
+  // first-view clean. Skipped entirely once the user has a custom position.
+  function setupScrollReveal(){
+    if (hasCustomPosition) return;
+    var cover = document.querySelector('.cover');
+    var threshold = cover ? (cover.getBoundingClientRect().height * 0.6) : 400;
+    function onScroll(){
+      if (window.scrollY > threshold) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  function onPointerDown(e){
+    dragging = true;
+    moved = false;
+    var rect = btn.getBoundingClientRect();
+    startLeft = rect.left;
+    startTop = rect.top;
+    startX = e.clientX;
+    startY = e.clientY;
+    btn.classList.add('dragging');
+    btn.setPointerCapture && btn.setPointerCapture(e.pointerId);
+  }
+
+  function onPointerMove(e){
+    if (!dragging) return;
+    var dx = e.clientX - startX;
+    var dy = e.clientY - startY;
+    if (!moved && (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD)) {
+      moved = true;
+    }
+    if (!moved) return;
+    var rect = btn.getBoundingClientRect();
+    var maxX = window.innerWidth - rect.width - 6;
+    var maxY = window.innerHeight - rect.height - 6;
+    var newLeft = clamp(startLeft + dx, 6, Math.max(6, maxX));
+    var newTop = clamp(startTop + dy, 6, Math.max(6, maxY));
+    btn.style.left = newLeft + 'px';
+    btn.style.top = newTop + 'px';
+    btn.style.right = 'auto';
+    btn.style.transform = 'none';
+  }
+
+  function onPointerUp(e){
+    if (!dragging) return;
+    dragging = false;
+    btn.classList.remove('dragging');
+    if (moved) {
+      var rect = btn.getBoundingClientRect();
+      savePosition(rect.left, rect.top);
+      hasCustomPosition = true;
+      btn.classList.add('visible');
+      e.preventDefault(); // treat as drag, not click
+    }
+  }
+
+  btn.addEventListener('pointerdown', onPointerDown);
+  btn.addEventListener('pointermove', onPointerMove);
+  btn.addEventListener('pointerup', onPointerUp);
+  btn.addEventListener('click', function(e){
+    if (moved) { e.preventDefault(); moved = false; }
+  });
+
+  window.addEventListener('resize', applyStoredPosition);
+  document.addEventListener('DOMContentLoaded', function(){
+    applyStoredPosition();
+    setupScrollReveal();
+  });
+  applyStoredPosition();
+  setupScrollReveal();
+})();
 </script>
 
 <div class="page">
