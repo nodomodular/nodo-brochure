@@ -425,10 +425,12 @@ section{padding:64px 64px;border-top:0.5px solid var(--rule)}
   #sticky-cta .sc-badge{
     width:50px;height:50px;border-radius:50%;
     background:white;
+    color:#1A1917;
     display:flex;align-items:center;justify-content:center;
     flex-shrink:0;
     box-shadow:0 2px 6px rgba(0,0,0,0.2);
     z-index:2;
+    position:relative;
   }
   #sticky-cta .sc-text{
     font-size:11px;font-weight:700;color:white;
@@ -437,9 +439,22 @@ section{padding:64px 64px;border-top:0.5px solid var(--rule)}
     letter-spacing:0.07em;
     text-transform:uppercase;
   }
+
+  /* Desktop: fixed bottom-right, not draggable — always guaranteed visible,
+     no need for the user to reposition it. */
   @media (min-width:860px){
-    #sticky-cta{ right: calc(50% - 440px + 20px); }
+    #sticky-cta{
+      top:auto;
+      bottom:28px;
+      right:calc(50% - 440px + 24px);
+      transform:none;
+      cursor:pointer;
+    }
+    #sticky-cta:active{ box-shadow:0 4px 20px rgba(26,25,23,0.3); }
   }
+
+  /* Mobile: icon-only, copper (brand color) for visibility against any
+     background, with a soft pulse to signal it's interactive. */
   @media (max-width:480px){
     #sticky-cta{
       background:transparent !important;
@@ -448,9 +463,24 @@ section{padding:64px 64px;border-top:0.5px solid var(--rule)}
     }
     #sticky-cta .sc-text{display:none}
     #sticky-cta .sc-badge{
-      width:50px;height:50px;
+      width:52px;height:52px;
+      background:var(--copper);
+      color:white;
       box-shadow:0 4px 14px rgba(26,25,23,0.35);
     }
+    #sticky-cta .sc-badge::after{
+      content:'';
+      position:absolute;
+      inset:0;
+      border-radius:50%;
+      background:var(--copper);
+      z-index:-1;
+      animation:sc-pulse 2.6s ease-out infinite;
+    }
+  }
+  @keyframes sc-pulse{
+    0%{ transform:scale(1); opacity:0.55; }
+    100%{ transform:scale(1.55); opacity:0; }
   }
 
   </style>
@@ -476,10 +506,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- CTA STICKY -->
 <a id="sticky-cta" href="https://configura.nodomodular.cl" target="_blank" data-event="cta_click_sticky" aria-label="Customiza tu quincho">
   <span class="sc-badge">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1917" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2.2" fill="#1A1917" stroke="none"/>
-      <line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2.2" fill="#1A1917" stroke="none"/>
-      <line x1="4" y1="18" x2="20" y2="18"/><circle cx="11" cy="18" r="2.2" fill="#1A1917" stroke="none"/>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2.2" fill="currentColor" stroke="none"/>
+      <line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2.2" fill="currentColor" stroke="none"/>
+      <line x1="4" y1="18" x2="20" y2="18"/><circle cx="11" cy="18" r="2.2" fill="currentColor" stroke="none"/>
     </svg>
   </span>
   <span class="sc-text">Customiza aquí</span>
@@ -521,10 +551,15 @@ function scrollToSection(id){
   var startX, startY, startLeft, startTop;
   var DRAG_THRESHOLD = 6;
   var hasCustomPosition = false;
+  var desktopMQ = window.matchMedia('(min-width:860px)');
+  function isDesktop(){ return desktopMQ.matches; }
 
   function clamp(val, min, max){ return Math.max(min, Math.min(max, val)); }
 
   function applyStoredPosition(){
+    // Desktop is fixed bottom-right by design — not draggable, so any
+    // legacy saved position (e.g. from a smaller window) is ignored.
+    if (isDesktop()) return;
     var raw;
     try { raw = localStorage.getItem(STORAGE_KEY); } catch(e) { return; }
     if (!raw) return;
@@ -570,6 +605,7 @@ function scrollToSection(id){
   var boundMaxX = 0, boundMaxY = 0;
 
   function onPointerDown(e){
+    if (isDesktop()) return; // fixed position on desktop — no drag
     dragging = true;
     moved = false;
     var rect = btn.getBoundingClientRect();
@@ -640,6 +676,19 @@ function scrollToSection(id){
   });
 
   window.addEventListener('resize', applyStoredPosition);
+  desktopMQ.addEventListener && desktopMQ.addEventListener('change', function(e){
+    if (e.matches) {
+      // Crossed into desktop — drop any inline position from a mobile drag
+      // session so the fixed bottom-right CSS position takes over.
+      btn.style.left = '';
+      btn.style.top = '';
+      btn.style.right = '';
+      btn.style.transform = '';
+      hasCustomPosition = false;
+    } else {
+      applyStoredPosition();
+    }
+  });
   document.addEventListener('DOMContentLoaded', function(){
     applyStoredPosition();
     setupScrollReveal();
