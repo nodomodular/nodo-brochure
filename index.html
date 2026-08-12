@@ -399,9 +399,8 @@ section{padding:64px 64px;border-top:0.5px solid var(--rule)}
   /* ── STICKY CTA ── */
   #sticky-cta{
     position:fixed;
-    top:50%;
+    bottom:20px;
     right:20px;
-    transform:translateY(-50%);
     z-index:850;
     display:flex;
     align-items:center;
@@ -432,6 +431,7 @@ section{padding:64px 64px;border-top:0.5px solid var(--rule)}
     z-index:2;
     position:relative;
   }
+  #sticky-cta .sc-badge svg{width:20px;height:20px}
   #sticky-cta .sc-text{
     font-size:11px;font-weight:700;color:white;
     padding:0 22px 0 14px;
@@ -440,17 +440,18 @@ section{padding:64px 64px;border-top:0.5px solid var(--rule)}
     text-transform:uppercase;
   }
 
-  /* Desktop: fixed bottom-right, not draggable — always guaranteed visible,
-     no need for the user to reposition it. */
+  /* Desktop: fixed bottom-right, not draggable, and noticeably smaller —
+     it just needs to be findable, not prominent, once space is abundant. */
   @media (min-width:860px){
     #sticky-cta{
-      top:auto;
-      bottom:28px;
+      bottom:24px;
       right:calc(50% - 440px + 24px);
-      transform:none;
       cursor:pointer;
     }
     #sticky-cta:active{ box-shadow:0 4px 20px rgba(26,25,23,0.3); }
+    #sticky-cta .sc-badge{ width:36px;height:36px }
+    #sticky-cta .sc-badge svg{ width:15px;height:15px }
+    #sticky-cta .sc-text{ font-size:10px;padding:0 16px 0 10px }
   }
 
   /* Mobile: icon-only, copper (brand color) for visibility against any
@@ -575,6 +576,7 @@ function scrollToSection(id){
     btn.style.top = y + 'px';
     btn.style.left = x + 'px';
     btn.style.right = 'auto';
+    btn.style.bottom = 'auto';
     btn.style.transform = 'none';
     btn.classList.add('visible');
   }
@@ -640,6 +642,7 @@ function scrollToSection(id){
       btn.style.left = startLeft + 'px';
       btn.style.top = startTop + 'px';
       btn.style.right = 'auto';
+      btn.style.bottom = 'auto';
       btn.style.transform = 'translate3d(0,0,0)';
     }
     if (!moved) return;
@@ -660,6 +663,7 @@ function scrollToSection(id){
       btn.style.left = finalLeft + 'px';
       btn.style.top = finalTop + 'px';
       btn.style.right = 'auto';
+      btn.style.bottom = 'auto';
       btn.style.transform = 'none';
       savePosition(finalLeft, finalTop);
       hasCustomPosition = true;
@@ -683,6 +687,7 @@ function scrollToSection(id){
       btn.style.left = '';
       btn.style.top = '';
       btn.style.right = '';
+      btn.style.bottom = '';
       btn.style.transform = '';
       hasCustomPosition = false;
     } else {
