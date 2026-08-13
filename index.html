@@ -375,7 +375,6 @@ section{padding:64px 64px;border-top:0.5px solid var(--rule)}
   }
   #nav-toggle, #nav-menu, #nav-overlay { display: none; }
   #desktop-nav { display: block; }
-  #sticky-cta { display: none; }
 }
 @media (min-width: 1200px) {
   #nav-toggle { right: calc(50% - 440px - 54px); }
@@ -512,6 +511,7 @@ section{padding:64px 64px;border-top:0.5px solid var(--rule)}
      it just needs to be findable, not prominent, once space is abundant. */
   @media (min-width:860px){
     #sticky-cta{
+      display:none !important;
       bottom:24px;
       right:calc(50% - 440px + 24px);
       cursor:pointer;
@@ -692,12 +692,13 @@ function scrollToSection(id){
 (function(){
   var btn = document.getElementById('sticky-cta');
   if (!btn) return;
+  var desktopMQ = window.matchMedia('(min-width:860px)');
+  if (desktopMQ.matches) { btn.remove(); return; }
   var STORAGE_KEY = 'nodo_sticky_cta_pos';
   var dragging = false, moved = false;
   var startX, startY, startLeft, startTop;
   var DRAG_THRESHOLD = 6;
   var hasCustomPosition = false;
-  var desktopMQ = window.matchMedia('(min-width:860px)');
   function isDesktop(){ return desktopMQ.matches; }
 
   function clamp(val, min, max){ return Math.max(min, Math.min(max, val)); }
