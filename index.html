@@ -286,6 +286,7 @@ section{padding:64px 64px;border-top:0.5px solid var(--rule)}
   background:none;border:none;cursor:pointer;
   padding:10px 24px;
   font-size:13px;font-weight:400;color:rgba(255,255,255,0.65);
+  letter-spacing:0.04em;text-transform:uppercase;
   font-family:'DM Sans',sans-serif;
   transition:color 0.15s, background 0.15s;
   border-left:2px solid transparent;
@@ -374,6 +375,7 @@ section{padding:64px 64px;border-top:0.5px solid var(--rule)}
   }
   #nav-toggle, #nav-menu, #nav-overlay { display: none; }
   #desktop-nav { display: block; }
+  #sticky-cta { display: none; }
 }
 @media (min-width: 1200px) {
   #nav-toggle { right: calc(50% - 440px - 54px); }
@@ -574,10 +576,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <nav id="desktop-nav">
   <div id="desktop-nav-inner">
     <div id="desktop-nav-links">
-      <button class="dnav-link" data-section="sec-personaliza" onclick="scrollToSection('sec-personaliza')">Personaliza</button>
-      <button class="dnav-link" data-section="sec-esencial" onclick="scrollToSection('sec-esencial')">Modelos</button>
+      <button class="dnav-link" data-section="sec-personaliza" onclick="scrollToSection('sec-personaliza')">Personalización</button>
+      <button class="dnav-link" data-section="sec-esencial" onclick="scrollToSection('sec-esencial')">Catálogo</button>
       <button class="dnav-link" data-section="sec-pilares" onclick="scrollToSection('sec-pilares')">Pilares</button>
-      <button class="dnav-link" data-section="sec-base" onclick="scrollToSection('sec-base')">La base</button>
+      <button class="dnav-link" data-section="sec-base" onclick="scrollToSection('sec-base')">La Base</button>
       <button class="dnav-link" data-section="sec-garantia" onclick="scrollToSection('sec-garantia')">Garantía</button>
       <button class="dnav-link" data-section="sec-quienes" onclick="scrollToSection('sec-quienes')">Quiénes somos</button>
     </div>
@@ -601,13 +603,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <span class="sc-text">Customiza aquí</span>
 </a>
 <nav id="nav-menu">
-    <button class="nav-item" onclick="scrollToSection('sec-personaliza');closeNav()">02 — Personaliza tu quincho</button>
-  <button class="nav-item" onclick="scrollToSection('sec-esencial');closeNav()">03 — Modelos</button>
-  <button class="nav-item" onclick="scrollToSection('sec-pilares');closeNav()">04 — Nuestros pilares</button>
-  <button class="nav-item" onclick="scrollToSection('sec-base');closeNav()">05 — La base de todo</button>
-  <button class="nav-item" onclick="scrollToSection('sec-garantia');closeNav()">06 — Garantía y postventa</button>
-  <button class="nav-item" onclick="scrollToSection('sec-cta');closeNav()">07 — Cotizar ahora</button>
-  <button class="nav-item" onclick="scrollToSection('sec-quienes');closeNav()">08 — Quiénes somos</button>
+    <button class="nav-item" onclick="scrollToSection('sec-personaliza');closeNav()">Personalización</button>
+  <button class="nav-item" onclick="scrollToSection('sec-esencial');closeNav()">Catálogo</button>
+  <button class="nav-item" onclick="scrollToSection('sec-pilares');closeNav()">Pilares</button>
+  <button class="nav-item" onclick="scrollToSection('sec-base');closeNav()">La Base</button>
+  <button class="nav-item" onclick="scrollToSection('sec-garantia');closeNav()">Garantía</button>
+  <button class="nav-item" onclick="scrollToSection('sec-cta');closeNav()">Cotizar ahora</button>
+  <button class="nav-item" onclick="scrollToSection('sec-quienes');closeNav()">Quiénes somos</button>
   <a class="nav-cta" href="https://configura.nodomodular.cl" data-event="cta_click_menu" target="_blank" onclick="closeNav()">Customiza tu quincho →</a>
 </nav>
 
