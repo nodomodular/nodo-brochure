@@ -561,6 +561,22 @@ section{padding:64px 64px;border-top:0.5px solid var(--rule)}
     100%{ transform:scale(1.55); opacity:0; }
   }
 
+.incluye-row{display:flex;align-items:center;gap:6px;border-top:0.5px solid rgba(255,255,255,0.1);padding-top:12px;margin-bottom:12px;cursor:pointer;user-select:none}
+.incluye-row span:first-child{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.55)}
+.incluye-icon{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,0.4);display:flex;align-items:center;justify-content:center;font-size:9px;font-style:italic;font-family:serif;color:rgba(255,255,255,0.55);flex-shrink:0}
+.incluye-chevron{margin-left:auto;font-size:9px;color:rgba(255,255,255,0.4);transition:transform 0.2s}
+.incluye-row.open .incluye-chevron{transform:rotate(180deg)}
+.incluye-list{max-height:0;overflow:hidden;transition:max-height 0.3s ease}
+.incluye-list.open{max-height:320px;margin-bottom:12px}
+.incluye-list ul{list-style:none;padding:10px 12px;background:rgba(255,255,255,0.04)}
+.incluye-list li{font-size:11px;color:rgba(255,255,255,0.65);padding:6px 0;display:flex;justify-content:space-between;gap:10px;border-bottom:0.5px solid rgba(255,255,255,0.05)}
+.incluye-list li:last-child{border-bottom:none}
+.incluye-list li span:first-child{flex-shrink:0;color:rgba(255,255,255,0.45)}
+.incluye-list li b{color:rgba(255,255,255,0.9);font-weight:500;text-align:right}
+@media (max-width:480px){
+  .incluye-list li{flex-direction:column;gap:2px}
+  .incluye-list li b{text-align:left}
+}
   </style>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -955,7 +971,22 @@ function scrollToSection(id){
         <p style="font-size:8px;color:rgba(255,255,255,0.2);margin-top:3px;font-style:italic;font-size:10px;color:rgba(255,255,255,0.45)">Varía según opciones elegidas</p>
       </div>
     </div>
-    <div style="border-top:0.5px solid rgba(255,255,255,0.1);padding-top:14px">
+    <div class="incluye-row" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+      <span>¿Qué incluye?</span>
+      <span class="incluye-icon">i</span>
+      <span class="incluye-chevron">▾</span>
+    </div>
+    <div class="incluye-list">
+      <ul>
+        <li><span>Piso</span><b>Pino</b></li>
+        <li><span>Muro interior</span><b>Metálico</b></li>
+        <li><span>Muro exterior</span><b>Pino vertical</b></li>
+        <li><span>Cielo</span><b>Pino machimbrado</b></li>
+        <li><span>Cubierta mueblería</span><b>Cuarzo</b></li>
+        <li><span>Parrilla</span><b>100x60, acero inoxidable en V, sistema spin up para regular altura</b></li>
+      </ul>
+    </div>
+    <div style="padding-top:2px">
       <a href="https://configura.nodomodular.cl" data-event="cta_click_esencial" target="_blank" style="display:block;background:#5C5550;padding:13px;text-align:center;text-decoration:none;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:white">Customiza tu quincho →</a>
     </div>
 </div>
@@ -987,7 +1018,22 @@ function scrollToSection(id){
         <p style="font-size:8px;color:rgba(255,255,255,0.2);margin-top:3px;font-style:italic;font-size:10px;color:rgba(255,255,255,0.45)">Varía según opciones elegidas</p>
       </div>
     </div>
-    <div style="border-top:0.5px solid rgba(255,255,255,0.1);padding-top:14px">
+    <div class="incluye-row" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+      <span>¿Qué incluye?</span>
+      <span class="incluye-icon">i</span>
+      <span class="incluye-chevron">▾</span>
+    </div>
+    <div class="incluye-list">
+      <ul>
+        <li><span>Piso</span><b>Pino</b></li>
+        <li><span>Muro interior</span><b>Pino horizontal</b></li>
+        <li><span>Muro exterior</span><b>Pino vertical</b></li>
+        <li><span>Cielo</span><b>Pino machimbrado</b></li>
+        <li><span>Cubierta mueblería</span><b>Cuarzo</b></li>
+        <li><span>Parrilla</span><b>100x60, acero inoxidable en V, sistema spin up para regular altura</b></li>
+      </ul>
+    </div>
+    <div style="padding-top:2px">
       <a href="https://configura.nodomodular.cl" data-event="cta_click_flex" target="_blank" style="display:block;background:#5C5550;padding:13px;text-align:center;text-decoration:none;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:white">Customiza tu quincho →</a>
     </div>
 </div>
@@ -1019,7 +1065,22 @@ function scrollToSection(id){
         <p style="font-size:8px;color:rgba(255,255,255,0.2);margin-top:3px;font-style:italic;font-size:10px;color:rgba(255,255,255,0.45)">Varía según opciones elegidas</p>
       </div>
     </div>
-    <div style="border-top:0.5px solid rgba(255,255,255,0.1);padding-top:14px">
+    <div class="incluye-row" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+      <span>¿Qué incluye?</span>
+      <span class="incluye-icon">i</span>
+      <span class="incluye-chevron">▾</span>
+    </div>
+    <div class="incluye-list">
+      <ul>
+        <li><span>Piso</span><b>Porcelanato antideslizante</b></li>
+        <li><span>Muro interior</span><b>Volcanita</b></li>
+        <li><span>Muro exterior</span><b>Pino vertical</b></li>
+        <li><span>Cielo</span><b>Volcanita</b></li>
+        <li><span>Cubierta mueblería</span><b>Cuarzo</b></li>
+        <li><span>Parrilla</span><b>100x60, acero inoxidable en V, sistema spin up para regular altura</b></li>
+      </ul>
+    </div>
+    <div style="padding-top:2px">
       <a href="https://configura.nodomodular.cl" data-event="cta_click_premium" target="_blank" style="display:block;background:#5C5550;padding:13px;text-align:center;text-decoration:none;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:white">Customiza tu quincho →</a>
     </div>
 </div>
