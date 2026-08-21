@@ -561,6 +561,8 @@ section{padding:64px 64px;border-top:0.5px solid var(--rule)}
     100%{ transform:scale(1.55); opacity:0; }
   }
 
+.flex-toggle-helper{display:flex;align-items:center;gap:5px;font-size:9.5px;font-weight:600;letter-spacing:0.02em;color:#D9A066;margin-bottom:8px}
+.flex-toggle-helper svg{width:11px;height:11px;flex-shrink:0}
 .flex-toggle{display:flex;border:1px solid rgba(255,255,255,0.18);margin-bottom:14px}
 .flex-toggle-btn{flex:1;text-align:center;padding:9px 6px;font-size:10px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:rgba(255,255,255,0.5);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif}
 .flex-toggle-btn.active{background:#6B5344;color:white}
@@ -1022,6 +1024,10 @@ function scrollToSection(id){
         </div>
         <p style="font-size:8px;color:rgba(255,255,255,0.2);margin-top:3px;font-style:italic;font-size:10px;color:rgba(255,255,255,0.45)">Varía según opciones elegidas</p>
       </div>
+    </div>
+    <div class="flex-toggle-helper">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#D9A066" stroke-width="2" stroke-linecap="round"><path d="M8 3L4 7l4 4M4 7h16M16 21l4-4-4-4M20 17H4"/></svg>
+      Clic para ver en detalle cada variante
     </div>
     <div class="flex-toggle" role="group" aria-label="Elegir opción de ventana">
       <button type="button" class="flex-toggle-btn active" data-variant="sin">Sin ventanas</button>
