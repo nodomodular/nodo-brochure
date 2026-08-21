@@ -561,6 +561,9 @@ section{padding:64px 64px;border-top:0.5px solid var(--rule)}
     100%{ transform:scale(1.55); opacity:0; }
   }
 
+.flex-toggle{display:flex;border:1px solid rgba(255,255,255,0.18);margin-bottom:14px}
+.flex-toggle-btn{flex:1;text-align:center;padding:9px 6px;font-size:10px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:rgba(255,255,255,0.5);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif}
+.flex-toggle-btn.active{background:#6B5344;color:white}
 .incluye-row{display:flex;align-items:center;gap:6px;border-top:0.5px solid rgba(255,255,255,0.1);padding-top:12px;margin-bottom:12px;user-select:none}
 .incluye-row span:first-child{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.55)}
 .incluye-icon{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,0.4);display:flex;align-items:center;justify-content:center;font-size:9px;font-style:italic;font-family:serif;color:rgba(255,255,255,0.55);flex-shrink:0}
@@ -997,7 +1000,7 @@ function scrollToSection(id){
 <!-- MODELO 2: CONFORT -->
 <div id="sec-flex" class="model-page">
   <div style="width:100%;background:#F4F3F1;position:relative;overflow:hidden">
-    <img src="https://res.cloudinary.com/jxrth5db/image/upload/v1785204257/Modelo_Flex_Brochure_wz7z0h.jpg" alt="Modelo 02 — Flex" style="width:100%;height:auto;display:block"/>
+    <img id="flex-img" src="https://res.cloudinary.com/jxrth5db/image/upload/v1787272941/Modelo_Flex_Sin_Ventana_HQ_Brochure_ig6eek.png" alt="Modelo 02 — Flex" style="width:100%;height:auto;display:block"/>
       <div style="position:absolute;top:14px;left:14px;background:rgba(255,255,255,0.92);padding:6px 12px">
         <p style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#1A1917;line-height:1">5% OFF · Lanzamiento</p>
         <p style="font-size:9px;color:#6B5344;letter-spacing:0.06em;margin-top:2px">Oferta por tiempo limitado</p>
@@ -1008,17 +1011,21 @@ function scrollToSection(id){
     <div class="mcard-top" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;margin-bottom:16px">
       <div>
         <p style="font-family:'Playfair Display',serif;font-size:22px;font-weight:400;color:white;line-height:1;margin-bottom:6px">Flex</p>
-        <p style="font-size:11px;color:rgba(255,255,255,0.4);line-height:1.5">El punto medio entre apertura y privacidad. Dos caras cerradas, dos abiertas. Tú decides si el frente lleva ventanas o se mantiene abierto.</p>
+        <p style="font-size:11px;color:rgba(255,255,255,0.4);line-height:1.5">El punto medio entre apertura y privacidad. Dos caras cerradas, dos abiertas. Tú decides si quieres incluir ventanas o si prefieres abierto.</p>
       </div>
       <div class="mcard-price" style="text-align:right">
         <p style="font-size:8px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:4px">Precio final desde</p>
-          <p style="font-size:13px;color:rgba(255,255,255,0.35);text-decoration:line-through;text-align:right;margin-bottom:3px">$14.790.000</p>
+          <p id="flex-price-old" style="font-size:13px;color:rgba(255,255,255,0.35);text-decoration:line-through;text-align:right;margin-bottom:3px">$14.790.000</p>
         <div style="display:flex;align-items:baseline;gap:5px;justify-content:flex-end">
-          <p class="mcard-price-val" style="font-family:'Playfair Display',serif;font-size:24px;font-weight:400;color:white;line-height:1">$13.990.000</p>
+          <p id="flex-price-new" class="mcard-price-val" style="font-family:'Playfair Display',serif;font-size:24px;font-weight:400;color:white;line-height:1">$13.990.000</p>
           <p style="font-size:10px;color:rgba(255,255,255,0.4)">+ IVA</p>
         </div>
         <p style="font-size:8px;color:rgba(255,255,255,0.2);margin-top:3px;font-style:italic;font-size:10px;color:rgba(255,255,255,0.45)">Varía según opciones elegidas</p>
       </div>
+    </div>
+    <div class="flex-toggle" role="group" aria-label="Elegir opción de ventana">
+      <button type="button" class="flex-toggle-btn active" data-variant="sin">Sin ventanas</button>
+      <button type="button" class="flex-toggle-btn" data-variant="con">Con ventanas</button>
     </div>
     <div class="incluye-row">
       <span>¿Qué incluye?</span>
@@ -1026,14 +1033,15 @@ function scrollToSection(id){
     </div>
     <div class="incluye-list open">
       <ul>
-        <li><span>Piso</span><b>Pino</b></li>
-        <li><span>Muro interior</span><b>Pino horizontal</b></li>
-        <li><span>Muro exterior</span><b>Pino vertical</b></li>
-        <li><span>Cielo</span><b>Pino machimbrado</b></li>
-        <li><span>Cubierta mueblería</span><b>Cuarzo</b></li>
-        <li><span>Parrilla</span><b>100x60, acero inoxidable en V, sistema spin up para regular altura</b></li>
+        <li><span>Piso</span><b id="flex-inc-piso">Pino</b></li>
+        <li><span>Muro interior</span><b id="flex-inc-mint">Pino horizontal</b></li>
+        <li><span>Muro exterior</span><b id="flex-inc-mext">Pino vertical</b></li>
+        <li><span>Cielo</span><b id="flex-inc-cielo">Pino machimbrado</b></li>
+        <li><span>Cubierta mueblería</span><b id="flex-inc-cubierta">Cuarzo</b></li>
+        <li id="flex-inc-ventanas-row" style="display:none"><span>Ventanas</span><b id="flex-inc-ventanas"></b></li>
+        <li><span>Parrilla</span><b id="flex-inc-parrilla">100x60, acero inoxidable en V, sistema spin up para regular altura</b></li>
       </ul>
-      <p class="incluye-disclaimer">Valor no incluye ventanas, preparación de suelo, traslado e instalación.</p>
+      <p id="flex-disclaimer" class="incluye-disclaimer">Valor no incluye ventanas, preparación de suelo, traslado e instalación.</p>
     </div>
     <div style="padding-top:2px">
       <a href="https://configura.nodomodular.cl" data-event="cta_click_flex" target="_blank" style="display:block;background:#5C5550;padding:13px;text-align:center;text-decoration:none;font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:white">Customiza tu quincho →</a>
@@ -1324,6 +1332,67 @@ document.addEventListener('click', function(e) {
     }
     document.addEventListener('click', function(e) {
       if (!e.target.closest('.qhs') && !e.target.closest('.qhs-panel')) closeAll();
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  var FLEX_VARIANTS = {
+    sin: {
+      img: 'https://res.cloudinary.com/jxrth5db/image/upload/v1787272941/Modelo_Flex_Sin_Ventana_HQ_Brochure_ig6eek.png',
+      old: '$14.790.000',
+      price: '$13.990.000',
+      disclaimer: 'Valor no incluye ventanas, preparación de suelo, traslado e instalación.',
+      incluye: {piso:'Pino', mint:'Pino horizontal', mext:'Pino vertical', cielo:'Pino machimbrado', cubierta:'Cuarzo', ventanas:null, parrilla:'100x60, acero inoxidable en V, sistema spin up para regular altura'}
+    },
+    con: {
+      img: 'https://res.cloudinary.com/jxrth5db/image/upload/v1785204257/Modelo_Flex_Brochure_wz7z0h.jpg',
+      old: '$18.349.000',
+      price: '$17.429.000',
+      disclaimer: 'Valor no incluye preparación de suelo, traslado e instalación.',
+      incluye: {piso:'Porcelanato antideslizante', mint:'Volcanita', mext:'Pino vertical', cielo:'Volcanita', cubierta:'Cuarzo', ventanas:'Termopanel con marco de PVC', parrilla:'100x60, acero inoxidable en V, sistema spin up para regular altura'}
+    }
+  };
+  var btns = document.querySelectorAll('.flex-toggle-btn');
+  var img = document.getElementById('flex-img');
+  var priceOld = document.getElementById('flex-price-old');
+  var priceNew = document.getElementById('flex-price-new');
+  var disclaimer = document.getElementById('flex-disclaimer');
+  var incPiso = document.getElementById('flex-inc-piso');
+  var incMint = document.getElementById('flex-inc-mint');
+  var incMext = document.getElementById('flex-inc-mext');
+  var incCielo = document.getElementById('flex-inc-cielo');
+  var incCubierta = document.getElementById('flex-inc-cubierta');
+  var incVentanasRow = document.getElementById('flex-inc-ventanas-row');
+  var incVentanas = document.getElementById('flex-inc-ventanas');
+  var incParrilla = document.getElementById('flex-inc-parrilla');
+  if (!btns.length || !img || !priceOld || !priceNew) return;
+  btns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var variant = btn.getAttribute('data-variant');
+      var data = FLEX_VARIANTS[variant];
+      if (!data) return;
+      btns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      img.src = data.img;
+      priceOld.textContent = data.old;
+      priceNew.textContent = data.price;
+      if (disclaimer) disclaimer.textContent = data.disclaimer;
+      if (incPiso) incPiso.textContent = data.incluye.piso;
+      if (incMint) incMint.textContent = data.incluye.mint;
+      if (incMext) incMext.textContent = data.incluye.mext;
+      if (incCielo) incCielo.textContent = data.incluye.cielo;
+      if (incCubierta) incCubierta.textContent = data.incluye.cubierta;
+      if (incParrilla) incParrilla.textContent = data.incluye.parrilla;
+      if (incVentanasRow && incVentanas) {
+        if (data.incluye.ventanas) {
+          incVentanas.textContent = data.incluye.ventanas;
+          incVentanasRow.style.display = '';
+        } else {
+          incVentanasRow.style.display = 'none';
+        }
+      }
     });
   });
 })();
